@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GSCel</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="nome">Nome</string>
+    <string name="telefone">Telefone</string>
+    <string name="datanascimento">Data de Nascimento</string>
+    <string name="encargo">Encargo</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="gravar">Gravar</string>
+
+</resources>
