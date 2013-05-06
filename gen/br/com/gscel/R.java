@@ -25,9 +25,9 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080009;
-        public static final int button1=0x7f080008;
         public static final int dataNascimentoBtn=0x7f080005;
         public static final int encargoSpn=0x7f080007;
+        public static final int gravarBtn=0x7f080008;
         public static final int nome=0x7f080000;
         public static final int nomeEdt=0x7f080001;
         public static final int telefoneEdt=0x7f080003;
