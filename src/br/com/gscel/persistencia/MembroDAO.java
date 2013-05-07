@@ -51,6 +51,34 @@ public class MembroDAO extends SQLiteOpenHelper {
 		return lista;
 
 	}
+	
+	
+	public Membro getMembroById(int posicao) {
+		Cursor c = getWritableDatabase().query(TABELA, COLUNAS, "id=?", new String[]{"" + posicao}, null, null, null);
+		c.moveToFirst();
+		
+		Membro m = new Membro();
+		m.setId(c.getInt(0));		
+		m.setNome(c.getString(1));
+		m.setDataNascimento(c.getString(2));
+		m.setTelefone(c.getString(3));
+		m.setEncargo(c.getString(4));
+		
+		c.close();
+		return m;
+	}
+
+	public void alterar(Membro membro) {
+		ContentValues values = new ContentValues();
+		values.put("nome", membro.getNome());
+		values.put("dataNascimento", membro.getDataNascimento());
+		values.put("telefone", membro.getTelefone());
+		values.put("encargo", membro.getEncargo());
+		
+		getWritableDatabase().update(TABELA, values, "id=?", new String[]{"" + membro.getId()});
+		
+	}
+	
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {

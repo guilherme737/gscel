@@ -1,84 +1,39 @@
 package br.com.gscel;
 
-import java.util.Calendar;
-
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import br.com.gscel.entidade.Membro;
-import br.com.gscel.persistencia.MembroDAO;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabContentFactory;
+import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends TabActivity implements OnTabChangeListener, TabContentFactory {
 
-	static final int DATE_DIALOG_ID = 999;
-	
-	private Membro membro;
-	
-	ArrayAdapter<String> adapter;
-    String numbers[] = { "Membro", "Frequentador Assíduo"};
-	
-	private Button dataNascimentoBtn;
-	
-	private int year;
-	private int month;
-	private int day;
-	
+	private final String CATEGORIA = "livro";
 	
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        //setContentView(R.layout.activity_main);
+        TabHost tabHost = getTabHost();
+        tabHost.setOnTabChangedListener(this);
         
-        final Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-    	month = c.get(Calendar.MONTH);
-    	day = c.get(Calendar.DAY_OF_MONTH);
-    	
-    	dataNascimentoBtn = (Button) findViewById(R.id.dataNascimentoBtn);
-    	dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(obterMesPorExtenso(month + 1)).append(" de ").append(year));
-        this.addListenerOnDataNascimentoBtn();
+        TabSpec tab1 = tabHost.newTabSpec("Tab 1");
+        tab1.setIndicator("Membros", getResources().getDrawable(R.drawable.ic_launcher));
+        tab1.setContent(new Intent(this, ListaMembrosActivity.class));
+        //tab1.setContent(this);
+        tabHost.addTab(tab1);
         
+        TabSpec tab2 = tabHost.newTabSpec("Tab 2");
+        tab2.setIndicator("Relatório", getResources().getDrawable(R.drawable.ic_launcher));
+        tab2.setContent(this);
+        tabHost.addTab(tab2);
         
-        Spinner encargoSpn = (Spinner) findViewById(R.id.encargoSpn);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, numbers);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        encargoSpn.setAdapter(adapter);
-        
-        
-        Button gravarBtn = (Button) findViewById(R.id.gravarBtn);
-        gravarBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				
-				EditText nome = (EditText) findViewById(R.id.nomeEdt);
-				EditText telefone = (EditText) findViewById(R.id.telefoneEdt);
-				Button dataNascimento = (Button) findViewById(R.id.dataNascimentoBtn);
-				Spinner encargo = (Spinner) findViewById(R.id.encargoSpn);
-				
-				membro.setNome(nome.getEditableText().toString());
-				membro.setTelefone(telefone.getEditableText().toString());
-				membro.setDataNascimento(dataNascimento.getEditableText().toString());
-				membro.setEncargo(encargo.getSelectedItem().toString());
-				
-				MembroDAO membroDAO = new MembroDAO(MainActivity.this);
-				
-				membroDAO.inserir(membro);
-				
-				membroDAO.close();
-				
-			}
-		});
     }
 
 
@@ -88,85 +43,20 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
-    
-    public void addListenerOnDataNascimentoBtn() {
 
-    	dataNascimentoBtn.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				showDialog(DATE_DIALOG_ID);
-			}
-
-		});
-
+	@Override
+	public View createTabContent(String tabId) {
+		TextView tv = new TextView(this);
+		tv.setText("Utilizando uma factory para criar a aba:" + tabId);		
+		return tv;
 	}
-    
-    @Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case DATE_DIALOG_ID:
-			// set date picker as current date
-			return new DatePickerDialog(this, datePickerListener, year, month, day);
-		}
-		return null;
-	}
-    
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
-		// when dialog box is closed, below method will be called.
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			year = selectedYear;
-			month = selectedMonth;
-			day = selectedDay;
-			
-			
 
-			// set selected date into textview
-			dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(obterMesPorExtenso(month + 1)).append(" de ").append(year)
-					.append(" "));
-
-			// set selected date into datepicker also
-			//dpResult.init(year, month, day, null);
-
-		}
-	};
-	
-	
-	private String obterMesPorExtenso(int mes) {
+	@Override
+	public void onTabChanged(String tabId) {
+		Log.i(CATEGORIA, "Trocou aba: " + tabId);
 		
-		switch (mes) {
-		case 1:
-			return "Janeiro";
-		case 2:
-			return "Fevereiro";
-		case 3:
-			return "Março";
-		case 4:
-			return "Abril";
-		case 5:
-			return "Maio";
-		case 6:
-			return "Junho";
-		case 7:
-			return "Julho";
-		case 8:
-			return "Agosto";
-		case 9:
-			return "Setembro";
-		case 10:
-			return "Outubro";
-		case 11:
-			return "Novembro";
-		case 12:
-			return "Dezembro";
-
-		default:
-			return "N/C";
-			
-		}
 	}
     
 }

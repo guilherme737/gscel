@@ -1,0 +1,35 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/fundo" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation="horizontal">
+	
+	<ImageView android:id="@+id/foto"
+			   android:layout_width="50dp"
+			   android:layout_height="50dp"
+			   android:contentDescription="@string/fotoDoMembro"/>
+	
+	<LinearLayout
+		android:id="@+id/detalhe" 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
+	
+		<TextView
+		    android:id="@+id/nome"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:paddingLeft="5dp"
+		    android:textSize="22px" />
+
+		<TextView
+		    android:id="@+id/encargo"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:paddingLeft="5dp"
+		    android:textSize="12px" />
+	
+	</LinearLayout>
+	
+</LinearLayout>

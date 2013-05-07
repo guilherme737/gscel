@@ -10,5 +10,8 @@
     <string name="encargo">Encargo</string>
     <string name="cadastro">Cadastro</string>
     <string name="gravar">Gravar</string>
+    <string name="title_activity_lista_membros">ListaMembrosActivity</string>
+    <string name="title_activity_formulario_membro">FormularioMembroActivity</string>
+    <string name="fotoDoMembro">Foto do Membro</string>
 
 </resources>
