@@ -62,12 +62,14 @@ public class ListaMembrosActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.clear();
 		
 		MenuItem novo = menu.add(0,0,0,"Novo Membro");
     	novo.setIcon(R.drawable.novo);
     	
-    	MenuItem sincronizar = menu.add(0,1,0,"Sincronizar");
-    	sincronizar.setIcon(R.drawable.novo);
+//    	MenuItem sincronizar = menu.add(0,1,0,"Sincronizar");
+//    	sincronizar.setIcon(R.drawable.novo);
+    	
     	
     	return super.onCreateOptionsMenu(menu);
 	}

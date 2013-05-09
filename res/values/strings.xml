@@ -13,5 +13,11 @@
     <string name="title_activity_lista_membros">ListaMembrosActivity</string>
     <string name="title_activity_formulario_membro">FormularioMembroActivity</string>
     <string name="fotoDoMembro">Foto do Membro</string>
+    <string name="title_activity_lista_meses_relatorio">ListaMesesRelatorioActivity</string>
+    <string name="title_activity_formulario_relatorio">FormularioRelatorioActivity</string>
+    <string name="dataCelula">Data da Reunião</string>
+    <string name="membroRelatorio">Membros</string>
+    <string name="faRelatorio">Freq. Assíduo</string>
+    <string name="visitanteRelatorio">Visitantes</string>
 
 </resources>

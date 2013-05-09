@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import br.com.gscel.entidade.Membro;
 import br.com.gscel.persistencia.MembroDAO;
+import br.com.gscel.util.Utils;
 
 public class FormularioMembroActivity extends Activity {
 
@@ -45,7 +46,7 @@ public class FormularioMembroActivity extends Activity {
     	day = c.get(Calendar.DAY_OF_MONTH);
     	
     	dataNascimentoBtn = (Button) findViewById(R.id.dataNascimentoBtn);
-    	dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(obterMesPorExtenso(month + 1)).append(" de ").append(year));
+    	dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(Utils.obterMesPorExtenso(month + 1)).append(" de ").append(year));
         
         
     	SharedPreferences preferences = getSharedPreferences("membroSelecionado", MODE_PRIVATE);
@@ -146,52 +147,14 @@ public class FormularioMembroActivity extends Activity {
 			year = selectedYear;
 			month = selectedMonth;
 			day = selectedDay;
-			
-			
 
-			// set selected date into textview
-			dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(obterMesPorExtenso(month + 1)).append(" de ").append(year)
+			dataNascimentoBtn.setText(new StringBuilder().append(day).append(" de ").append(Utils.obterMesPorExtenso(month + 1)).append(" de ").append(year)
 					.append(" "));
-
-			// set selected date into datepicker also
-			//dpResult.init(year, month, day, null);
 
 		}
 	};
 	
 	
-	private String obterMesPorExtenso(int mes) {
-		
-		switch (mes) {
-		case 1:
-			return "Janeiro";
-		case 2:
-			return "Fevereiro";
-		case 3:
-			return "Março";
-		case 4:
-			return "Abril";
-		case 5:
-			return "Maio";
-		case 6:
-			return "Junho";
-		case 7:
-			return "Julho";
-		case 8:
-			return "Agosto";
-		case 9:
-			return "Setembro";
-		case 10:
-			return "Outubro";
-		case 11:
-			return "Novembro";
-		case 12:
-			return "Dezembro";
-
-		default:
-			return "N/C";
-			
-		}
-	}
+	
     
 }

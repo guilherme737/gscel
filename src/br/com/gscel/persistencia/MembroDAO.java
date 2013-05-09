@@ -6,19 +6,14 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import br.com.gscel.entidade.Membro;
 
-public class MembroDAO extends SQLiteOpenHelper {
-
-	private static final String TABELA = "Membro";
-	private static final int VERSION = 1;
+public class MembroDAO extends SQLiteAjudante {
 	
 	private static final String[] COLUNAS = {"id", "nome", "datanascimento", "telefone", "encargo"};
 
 	public MembroDAO(Context context) {
-		super(context, TABELA, null, VERSION);
+		super(context);
 
 	}
 
@@ -29,11 +24,11 @@ public class MembroDAO extends SQLiteOpenHelper {
 		valores.put("telefone", membro.getTelefone());
 		valores.put("encargo", membro.getEncargo());
 
-		getWritableDatabase().insert(TABELA, null, valores);
+		getWritableDatabase().insert(Membro.MEMBRO_TAB, null, valores);
 	}
 
 	public List<Membro> getLista() {
-		Cursor c = getWritableDatabase().query(TABELA, COLUNAS, null, null,
+		Cursor c = getWritableDatabase().query(Membro.MEMBRO_TAB, COLUNAS, null, null,
 				null, null, null);
 		List<Membro> lista = new ArrayList<Membro>();
 		while (c.moveToNext()) {
@@ -50,11 +45,10 @@ public class MembroDAO extends SQLiteOpenHelper {
 
 		return lista;
 
-	}
-	
+	}	
 	
 	public Membro getMembroById(int posicao) {
-		Cursor c = getWritableDatabase().query(TABELA, COLUNAS, "id=?", new String[]{"" + posicao}, null, null, null);
+		Cursor c = getWritableDatabase().query(Membro.MEMBRO_TAB, COLUNAS, "id=?", new String[]{"" + posicao}, null, null, null);
 		c.moveToFirst();
 		
 		Membro m = new Membro();
@@ -75,27 +69,8 @@ public class MembroDAO extends SQLiteOpenHelper {
 		values.put("telefone", membro.getTelefone());
 		values.put("encargo", membro.getEncargo());
 		
-		getWritableDatabase().update(TABELA, values, "id=?", new String[]{"" + membro.getId()});
+		getWritableDatabase().update(Membro.MEMBRO_TAB, values, "id=?", new String[]{"" + membro.getId()});
 		
 	}
 	
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		String sql = "CREATE TABLE " + TABELA 
-				+ "( id INTEGER PRIMARY KEY,"
-				+ " nome TEXT UNIQUE NOT NULL,"
-				+ " datanascimento TEXT,"
-				+ " telefone TEXT,"
-				+ " encargo TEXT" + ");";
-		db.execSQL(sql);
-
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
-		db.execSQL("DROP TABLE IF EXISTS " + MembroDAO.TABELA);
-		this.onCreate(db);
-	}
-
 }

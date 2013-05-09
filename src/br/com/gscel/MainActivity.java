@@ -24,14 +24,14 @@ public class MainActivity extends TabActivity implements OnTabChangeListener, Ta
         tabHost.setOnTabChangedListener(this);
         
         TabSpec tab1 = tabHost.newTabSpec("Tab 1");
-        tab1.setIndicator("Membros", getResources().getDrawable(R.drawable.ic_launcher));
+        tab1.setIndicator("Membros", getResources().getDrawable(R.drawable.membros));
         tab1.setContent(new Intent(this, ListaMembrosActivity.class));
         //tab1.setContent(this);
         tabHost.addTab(tab1);
         
         TabSpec tab2 = tabHost.newTabSpec("Tab 2");
-        tab2.setIndicator("Relatório", getResources().getDrawable(R.drawable.ic_launcher));
-        tab2.setContent(this);
+        tab2.setIndicator("Relatório", getResources().getDrawable(R.drawable.relatorio));
+        tab2.setContent(new Intent(this, ListaMesesRelatorioActivity.class));
         tabHost.addTab(tab2);
         
     }

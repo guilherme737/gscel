@@ -5,6 +5,15 @@ import java.io.Serializable;
 public class Membro implements Serializable {
 
 	private static final long serialVersionUID = 3713955474723456027L;
+	
+	public static final String MEMBRO_TAB = "membro";
+	
+	public static final String CREATE_TABLE_MEMBRO = "CREATE TABLE " + MEMBRO_TAB 
+			+ "( id INTEGER PRIMARY KEY,"
+			+ " nome TEXT UNIQUE NOT NULL,"
+			+ " datanascimento TEXT,"
+			+ " telefone TEXT,"
+			+ " encargo TEXT" + ");";
 
 	private int id;
 	private String nome;
