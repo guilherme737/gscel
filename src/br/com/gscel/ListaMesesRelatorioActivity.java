@@ -11,15 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import br.com.gscel.adapter.ListaMesAdapter;
+import br.com.gscel.persistencia.RelatorioDAO;
 import br.com.gscel.util.Utils;
 
 public class ListaMesesRelatorioActivity extends Activity {
 
-	private ListaMesAdapter ExpAdapter;
+	private ListaMesAdapter listaMesAdapter;
 
-    private ArrayList<MesAjudante> ExpListItems;
+    private ArrayList<MesAjudante> lstMesAjudante;
 
-    private ExpandableListView ExpandList;
+    private ExpandableListView expandList;
 
 	
 	
@@ -27,10 +28,10 @@ public class ListaMesesRelatorioActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listamesesrelatorio);
-		ExpandList = (ExpandableListView) findViewById(R.id.mesesListView);
-        ExpListItems = obterListaMeses();
-        ExpAdapter = new ListaMesAdapter(ListaMesesRelatorioActivity.this, ExpListItems);
-        ExpandList.setAdapter(ExpAdapter);
+		expandList = (ExpandableListView) findViewById(R.id.mesesListView);
+        lstMesAjudante = obterListaMeses();
+        listaMesAdapter = new ListaMesAdapter(ListaMesesRelatorioActivity.this, lstMesAjudante);
+        expandList.setAdapter(listaMesAdapter);
 	}
 	
 	@Override
@@ -46,7 +47,7 @@ public class ListaMesesRelatorioActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if(item.getItemId() == 0){
-			SharedPreferences preferences = getSharedPreferences("membroSelecionado", MODE_PRIVATE);
+			SharedPreferences preferences = getSharedPreferences("relatorioSelecionado", MODE_PRIVATE);
     		SharedPreferences.Editor editor = preferences.edit();
     		editor.remove("posicao");
     		editor.commit();
@@ -59,6 +60,8 @@ public class ListaMesesRelatorioActivity extends Activity {
 	public ArrayList<MesAjudante> obterListaMeses() {
 		
 		ArrayList<MesAjudante> lstMes = new ArrayList<ListaMesesRelatorioActivity.MesAjudante>();
+		
+		RelatorioDAO relatorioDAO = new RelatorioDAO(this);
 		
 		for (int i = 1; i <= 12; i++) {
 			MesAjudante mes = new MesAjudante(i);

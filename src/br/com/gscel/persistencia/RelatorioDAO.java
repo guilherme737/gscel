@@ -24,6 +24,9 @@ public class RelatorioDAO extends SQLiteAjudante {
 		valores.put("membros", relatorio.getMembros());
 		valores.put("frequentadoresAssiduos", relatorio.getFrequentadoresAssiduos());
 		valores.put("visitantes", relatorio.getVisitantes());
+		valores.put("dia", relatorio.getDia());
+		valores.put("mes", relatorio.getMes());
+		valores.put("ano", relatorio.getAno());
 
 		getWritableDatabase().insert(Relatorio.RELATORIO_TAB, null, valores);
 	}
@@ -38,7 +41,10 @@ public class RelatorioDAO extends SQLiteAjudante {
 			relatorio.setDataReuniao(c.getString(1));
 			relatorio.setMembros(c.getInt(2));
 			relatorio.setFrequentadoresAssiduos(c.getInt(3));
-			relatorio.setVisitantes(c.getInt(4));			
+			relatorio.setVisitantes(c.getInt(4));
+			relatorio.setDia(c.getInt(5));
+			relatorio.setMes(c.getInt(6));
+			relatorio.setAno(c.getInt(7));
 
 			lista.add(relatorio);
 		}
