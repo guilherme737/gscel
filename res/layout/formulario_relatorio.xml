@@ -16,7 +16,7 @@
         android:text="@string/dataCelula" />
 
     <Button
-        android:id="@+id/dataCelulaBtn"
+        android:id="@+id/dataReuniaoBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="" />

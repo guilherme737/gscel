@@ -13,8 +13,8 @@ public class Relatorio {
 			+ " visitantes INTEGER,"
 			+ " dia INTEGER,"
 			+ " mes INTEGER,"
-			+ " ano INTEGER,"
-			+ ");";
+			+ " ano INTEGER"
+			+ " );";
 	
 	private int id;	
 	private String dataReuniao;

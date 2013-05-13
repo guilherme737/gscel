@@ -11,7 +11,7 @@ import br.com.gscel.entidade.Relatorio;
 public class RelatorioDAO extends SQLiteAjudante {
 
 	
-	private static final String[] COLUNAS = {"id", "dataReuniao", "membros", "frequentadoresAssiduos", "visitantes"};
+	private static final String[] COLUNAS = {"id", "dataReuniao", "membros", "frequentadoresAssiduos", "visitantes", "dia", "mes", "ano"};
 	
 	public RelatorioDAO(Context context) {
 		super(context);		
@@ -68,6 +68,29 @@ public class RelatorioDAO extends SQLiteAjudante {
 		
 		c.close();
 		return r;
+	}
+	
+	public List<Relatorio> getRelatorioPorAnoEMes(int ano, int mes) {
+		Cursor c = getWritableDatabase().query(Relatorio.RELATORIO_TAB, COLUNAS, "ano=? AND mes=?", new String[]{"" + ano, "" + mes}, null, null, "dia");
+		//c.moveToFirst();
+		
+		List<Relatorio> lista = new ArrayList<Relatorio>();
+		while (c.moveToNext()) {
+			Relatorio relatorio = new Relatorio();
+			relatorio.setId(c.getInt(0));
+			relatorio.setDataReuniao(c.getString(1));
+			relatorio.setMembros(c.getInt(2));
+			relatorio.setFrequentadoresAssiduos(c.getInt(3));
+			relatorio.setVisitantes(c.getInt(4));
+			relatorio.setDia(c.getInt(5));
+			relatorio.setMes(c.getInt(6));
+			relatorio.setAno(c.getInt(7));
+
+			lista.add(relatorio);
+		}
+		
+		c.close();
+		return lista;
 	}
 
 	public void alterar(Relatorio relatorio) {

@@ -11,7 +11,7 @@ public class SQLiteAjudante extends SQLiteOpenHelper {
 
 	private static final String BANCO = "gscel.db";
 	
-	private static final int VERSION = 1;
+	private static final int VERSION = 2;
 	
 	private static final String TAG = "SQLiteAjudante";
 	

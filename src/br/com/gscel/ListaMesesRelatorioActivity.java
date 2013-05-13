@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import br.com.gscel.adapter.ListaMesAdapter;
+import br.com.gscel.entidade.Relatorio;
 import br.com.gscel.persistencia.RelatorioDAO;
 import br.com.gscel.util.Utils;
 
@@ -59,23 +60,50 @@ public class ListaMesesRelatorioActivity extends Activity {
 	
 	public ArrayList<MesAjudante> obterListaMeses() {
 		
+		int ano = 2013;
+		
 		ArrayList<MesAjudante> lstMes = new ArrayList<ListaMesesRelatorioActivity.MesAjudante>();
 		
 		RelatorioDAO relatorioDAO = new RelatorioDAO(this);
 		
 		for (int i = 1; i <= 12; i++) {
 			MesAjudante mes = new MesAjudante(i);
+			mes.setLstSemanas(new ArrayList<SemanaRelatorioAjudante>());
+			
+			List<Relatorio> lstRelatorio = relatorioDAO.getRelatorioPorAnoEMes(ano, i);			
+			for (Relatorio relatorio : lstRelatorio) {
+				SemanaRelatorioAjudante semana = new SemanaRelatorioAjudante();
+				semana.setData(Utils.obterDataPorExtenso(relatorio.getDia(), relatorio.getMes(), relatorio.getAno()));
+				semana.setDetalhe("Membros - " + relatorio.getMembros() + " | Freq. Assíd. - " + relatorio.getFrequentadoresAssiduos() + " | Visitantes - " + relatorio.getVisitantes());
+				mes.getLstSemanas().add(semana);
+			}
+			
 			lstMes.add(mes);
 		}
 		
 		return lstMes;
 	}
+	
+	@Override
+    protected void onResume() {
+    	super.onResume();
+    	carregaLista();
+    }
+    
+    private void carregaLista() {
+				
+		lstMesAjudante = obterListaMeses();		
+		listaMesAdapter = new ListaMesAdapter(ListaMesesRelatorioActivity.this, lstMesAjudante);
+        expandList.setAdapter(listaMesAdapter);
+		
+	}
+
 
 	public class MesAjudante {
 		
 		private String descricao;
 		
-		private List<String> lstSemanas;
+		private List<SemanaRelatorioAjudante> lstSemanas;
 		
 		
 		public MesAjudante(int mes) {
@@ -90,17 +118,41 @@ public class ListaMesesRelatorioActivity extends Activity {
 			this.descricao = descricao;
 		}
 
-		public List<String> getLstSemanas() {
+		public List<SemanaRelatorioAjudante> getLstSemanas() {
 			if (lstSemanas == null) {
-				lstSemanas = new ArrayList<String>();
+				lstSemanas = new ArrayList<SemanaRelatorioAjudante>();
 			}
 			return lstSemanas;
 		}
 
-		public void setLstSemanas(List<String> lstSemanas) {
+		public void setLstSemanas(List<SemanaRelatorioAjudante> lstSemanas) {
 			this.lstSemanas = lstSemanas;
 		}
 	}
+	
+	public class SemanaRelatorioAjudante {
+		
+		public String data;
+		public String detalhe;
+		
+		public String getData() {
+			return data;
+		}
+		public void setData(String data) {
+			this.data = data;
+		}
+		public String getDetalhe() {
+			return detalhe;
+		}
+		public void setDetalhe(String detalhe) {
+			this.detalhe = detalhe;
+		}
+		
+		
+		
+	}
+	
+	
 	
 	
 }

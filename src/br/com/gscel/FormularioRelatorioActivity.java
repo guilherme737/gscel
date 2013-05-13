@@ -39,8 +39,8 @@ public class FormularioRelatorioActivity extends Activity {
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
 
-		dataReuniaoBtn = (Button) findViewById(R.id.dataCelulaBtn);
-		dataReuniaoBtn.setText(new StringBuilder().append(day).append(" de ").append(Utils.obterMesPorExtenso(month + 1)).append(" de ").append(year));
+		dataReuniaoBtn = (Button) findViewById(R.id.dataReuniaoBtn);
+		dataReuniaoBtn.setText(Utils.obterDataPorExtenso(day, month, year));
 
 		SharedPreferences preferences = getSharedPreferences("relatorioSelecionado", MODE_PRIVATE);
 		final int posicao = preferences.getInt("posicao", -1);
@@ -50,7 +50,7 @@ public class FormularioRelatorioActivity extends Activity {
 			relatorio = dao.getRelatorioById(posicao + 1);
 			dao.close();
 
-			((Button) findViewById(R.id.dataCelulaBtn)).setText(relatorio.getDataReuniao());
+			((Button) findViewById(R.id.dataReuniaoBtn)).setText(relatorio.getDataReuniao());
 			((EditText) findViewById(R.id.membroRelatorioEdt)).setText(relatorio.getMembros());
 			((EditText) findViewById(R.id.faRelatorioEdt)).setText(relatorio.getFrequentadoresAssiduos());
 			((EditText) findViewById(R.id.visitanteRelatorioEdt)).setText(relatorio.getVisitantes());
@@ -68,7 +68,7 @@ public class FormularioRelatorioActivity extends Activity {
 			public void onClick(View v) {
 
 				
-				Button dataReuniaoBtn = (Button) findViewById(R.id.dataCelulaBtn);
+				Button dataReuniaoBtn = (Button) findViewById(R.id.dataReuniaoBtn);
 				EditText membrosEdt = (EditText) findViewById(R.id.membroRelatorioEdt);
 				EditText frequentadoresAssiduosEdt = (EditText) findViewById(R.id.faRelatorioEdt);
 				EditText visitantesEdt = (EditText) findViewById(R.id.visitanteRelatorioEdt);
@@ -77,6 +77,9 @@ public class FormularioRelatorioActivity extends Activity {
 				relatorio.setMembros(Integer.parseInt(membrosEdt.getEditableText().toString()));
 				relatorio.setFrequentadoresAssiduos(Integer.parseInt(frequentadoresAssiduosEdt.getEditableText().toString()));
 				relatorio.setVisitantes(Integer.parseInt(visitantesEdt.getEditableText().toString()));
+				relatorio.setDia(day);
+				relatorio.setMes(month + 1);
+				relatorio.setAno(year);
 				
 				RelatorioDAO relatorioDAO = new RelatorioDAO(FormularioRelatorioActivity.this);
 				

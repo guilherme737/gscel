@@ -1,5 +1,11 @@
 package br.com.gscel.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Utils {
 
 	public static String obterMesPorExtenso(int mes) {
@@ -34,5 +40,16 @@ public class Utils {
 			return "N/C";
 			
 		}
+	}
+	
+	public static String obterDataPorExtenso(int dia, int mes, int ano) {
+		
+		Calendar c = Calendar.getInstance(Locale.getDefault());
+		c.set(ano, mes, dia);		
+		
+		DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy", Locale.getDefault()); 
+		Date hoje = c.getTime();  
+		
+		return dfmt.format(hoje);
 	}
 }

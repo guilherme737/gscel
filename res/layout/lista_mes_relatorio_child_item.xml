@@ -8,6 +8,13 @@
         android:id="@+id/semanaTxt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"        
-        android:textSize="17sp" />
+        android:textSize="17sp" 
+        android:paddingLeft="30dp"/>
+     <TextView
+        android:id="@+id/detalheTxt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:textSize="13sp"
+        android:paddingLeft="32dp" />
 
 </LinearLayout>
