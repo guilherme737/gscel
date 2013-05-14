@@ -108,10 +108,11 @@ public class ListaMembrosActivity extends Activity {
 			View view = vi.inflate(R.layout.item, null);
 			
 			LinearLayout ll = (LinearLayout) view.findViewById(R.id.fundo);
+			
 			if(i%2 == 0){
-				ll.setBackgroundColor(0xFFDDEEFF);
+				ll.setBackgroundColor(0x77DDEEFF);
 			}else{
-				ll.setBackgroundColor(0xFFF0F0F0);
+				ll.setBackgroundColor(0x77F0F0F0);
 			}
 			
 			ImageView imagem = (ImageView) view.findViewById(R.id.foto);
